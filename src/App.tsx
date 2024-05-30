@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddCookie from "./AddCookie/AddCookie";
+import { AssignCookie } from "./AssignCookie/AssignCookie";
 
 export default function App() {
   return (
@@ -16,7 +17,9 @@ export default function App() {
         <TabsContent value="add-cookie">
           <AddCookie />
         </TabsContent>
-        <TabsContent value="assign-cookie">assign-cookie</TabsContent>
+        <TabsContent value="assign-cookie">
+          <AssignCookie />
+        </TabsContent>
       </Tabs>
     </div>
   );

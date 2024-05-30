@@ -1,4 +1,3 @@
-// AddCookie.tsx
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,9 +12,9 @@ import {
 import { Cookie } from "@/types";
 import { FilePenLine, PlusCircle, Trash } from "lucide-react";
 import React, { useState, ChangeEvent } from "react";
-import { CookieDialog } from "./CookieDailog";
+import { CookieDialog } from "../Common/CookieDailog";
 
-const initialCookies: Cookie[] = [
+export const initialCookies: Cookie[] = [
   { url: "google.com", name: "first cookie", value: "first value" },
   { url: "facebook.com", name: "second cookie", value: "second value" },
   { url: "twitter.com", name: "third cookie", value: "third value" },

@@ -18,24 +18,38 @@ export const CookieDialog: FC<CookieDialogProps> = ({
   onSave,
   mode,
 }) => {
-  const [url, setUrl] = useState<string>(cookie?.url || "");
-  const [name, setName] = useState<string>(cookie?.name || "");
-  const [value, setValue] = useState<string>(cookie?.value || "");
+  const [cookieDetails, setCookieDetails] = useState({
+    url: cookie?.url || "",
+    name: cookie?.name || "",
+    value: cookie?.value || "",
+  });
 
   useEffect(() => {
     if (cookie) {
-      setUrl(cookie.url);
-      setName(cookie.name);
-      setValue(cookie.value);
+      setCookieDetails({
+        url: cookie.url,
+        name: cookie.name,
+        value: cookie.value,
+      });
     } else {
-      setUrl("");
-      setName("");
-      setValue("");
+      setCookieDetails({
+        url: "",
+        name: "",
+        value: "",
+      });
     }
   }, [cookie]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCookieDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = () => {
-    onSave({ url, name, value });
+    onSave(cookieDetails);
   };
 
   return (
@@ -55,8 +69,8 @@ export const CookieDialog: FC<CookieDialogProps> = ({
               placeholder="Enter URL"
               id="url"
               name="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              value={cookieDetails.url}
+              onChange={handleChange}
               disabled={mode === "edit"}
               required
             />
@@ -69,8 +83,8 @@ export const CookieDialog: FC<CookieDialogProps> = ({
               placeholder="Enter name"
               id="name"
               name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={cookieDetails.name}
+              onChange={handleChange}
               disabled={mode === "edit"}
               required
             />
@@ -83,8 +97,8 @@ export const CookieDialog: FC<CookieDialogProps> = ({
               placeholder="Enter value"
               id="value"
               name="value"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={cookieDetails.value}
+              onChange={handleChange}
               required
             />
           </div>
