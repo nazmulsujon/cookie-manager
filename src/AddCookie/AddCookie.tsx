@@ -1,3 +1,4 @@
+// AddCookie.tsx
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,26 +10,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Cookie } from "@/types";
 import { FilePenLine, PlusCircle, Trash } from "lucide-react";
 import React, { useState, ChangeEvent } from "react";
-import { AddCookieDialog } from "./AddCookieDailog";
+import { CookieDialog } from "./CookieDailog";
 
-const cookies = [
-  { url: "google.com", name: "first cookie", value: "cookie value" },
-  { url: "facebook.com", name: "second cookie", value: "another value" },
-  { url: "twitter.com", name: "third cookie", value: "value three" },
+const initialCookies: Cookie[] = [
+  { url: "google.com", name: "first cookie", value: "first value" },
+  { url: "facebook.com", name: "second cookie", value: "second value" },
+  { url: "twitter.com", name: "third cookie", value: "third value" },
 ];
 
-interface Cookie {
-  url: string;
-  name: string;
-  value: string;
-}
-
 export default function AddCookie() {
-  const [data, setData] = useState<Cookie[]>(cookies);
-  const [addCookieModal, setAddCookieModal] = useState<boolean>(false);
+  const [data, setData] = useState<Cookie[]>(initialCookies);
+  const [selectedCookie, setSelectedCookie] = useState<Cookie | null>(null);
+  const [cookieModal, setCookieModal] = useState<boolean>(false);
+  const [mode, setMode] = useState<"add" | "edit">("add");
   const [search, setSearch] = useState<string>("");
+
+  const handleAdd = () => {
+    setSelectedCookie(null);
+    setMode("add");
+    setCookieModal(true);
+  };
+
+  const handleEdit = (cookie: Cookie) => {
+    setSelectedCookie(cookie);
+    setMode("edit");
+    setCookieModal(true);
+  };
+
+  const handleSave = (cookie: Cookie) => {
+    if (mode === "add") {
+      setData([...data, cookie]);
+    } else if (mode === "edit") {
+      setData(data.map((item) => (item === selectedCookie ? cookie : item)));
+    }
+    setCookieModal(false);
+  };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
@@ -53,11 +72,17 @@ export default function AddCookie() {
           variant="outline"
           size="icon"
           className="rounded-[6px]"
-          onClick={() => setAddCookieModal(true)}
+          onClick={handleAdd}
         >
           <PlusCircle className="size-5" />
         </Button>
-        <AddCookieDialog open={addCookieModal} setOpen={setAddCookieModal} />
+        <CookieDialog
+          open={cookieModal}
+          setOpen={setCookieModal}
+          cookie={selectedCookie}
+          onSave={handleSave}
+          mode={mode}
+        />
       </div>
       <Table>
         <TableHeader>
@@ -75,7 +100,12 @@ export default function AddCookie() {
                 <span> {cookie.value}</span>
               </TableCell>
               <TableCell className="text-center w-[200px] py-2 space-x-2">
-                <Button variant="outline" size="icon" className="rounded-[6px]">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-[6px]"
+                  onClick={() => handleEdit(cookie)}
+                >
                   <FilePenLine className="size-5" />
                 </Button>
                 <Button variant="outline" size="icon" className="rounded-[6px]">
