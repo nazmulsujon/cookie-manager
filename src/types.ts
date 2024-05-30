@@ -17,3 +17,8 @@ export type CookieDialogProps = {
 export type SearchResultProps = {
   setContent: (content: "search-card" | "search-result") => void;
 };
+
+export type AssignCookieDialogProps = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};

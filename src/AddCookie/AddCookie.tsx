@@ -12,9 +12,21 @@ import {
 import { Cookie } from "@/types";
 import { FilePenLine, PlusCircle, Trash } from "lucide-react";
 import React, { useState, ChangeEvent } from "react";
-import { CookieDialog } from "../Common/CookieDailog";
+import { CookieDialog } from "./CookieDailog";
 
 export const initialCookies: Cookie[] = [
+  { url: "google.com", name: "first cookie", value: "first value" },
+  { url: "facebook.com", name: "second cookie", value: "second value" },
+  { url: "twitter.com", name: "third cookie", value: "third value" },
+  { url: "google.com", name: "first cookie", value: "first value" },
+  { url: "facebook.com", name: "second cookie", value: "second value" },
+  { url: "twitter.com", name: "third cookie", value: "third value" },
+  { url: "google.com", name: "first cookie", value: "first value" },
+  { url: "facebook.com", name: "second cookie", value: "second value" },
+  { url: "twitter.com", name: "third cookie", value: "third value" },
+  { url: "google.com", name: "first cookie", value: "first value" },
+  { url: "facebook.com", name: "second cookie", value: "second value" },
+  { url: "twitter.com", name: "third cookie", value: "third value" },
   { url: "google.com", name: "first cookie", value: "first value" },
   { url: "facebook.com", name: "second cookie", value: "second value" },
   { url: "twitter.com", name: "third cookie", value: "third value" },
@@ -83,37 +95,47 @@ export default function AddCookie() {
           mode={mode}
         />
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Cookies</TableHead>
-            <TableHead className="text-center w-[200px]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredData.map((cookie, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium py-2 flex flex-col">
-                <span className="capitalize">{cookie.url}</span>
-                <span>{cookie.name}</span>
-                <span> {cookie.value}</span>
-              </TableCell>
-              <TableCell className="text-center w-[200px] py-2 space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-[6px]"
-                  onClick={() => handleEdit(cookie)}
-                >
-                  <FilePenLine className="size-5" />
-                </Button>
-                <Button variant="outline" size="icon" className="rounded-[6px]">
-                  <Trash className="size-5" />
-                </Button>
-              </TableCell>
+
+      <div className="overflow-y-auto max-h-[70vh]">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Cookies</TableHead>
+              <TableHead className="text-center w-[200px]">Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
+          </TableHeader>
+          <TableBody>
+            {filteredData.map((cookie, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium py-2 flex flex-col">
+                  <span className="capitalize">{cookie.url}</span>
+                  <span>{cookie.name}</span>
+                  <span> {cookie.value}</span>
+                </TableCell>
+                <TableCell className="text-center w-[200px] py-2 space-x-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-[6px]"
+                    onClick={() => handleEdit(cookie)}
+                  >
+                    <FilePenLine className="size-5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-[6px]"
+                  >
+                    <Trash className="size-5" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <Table>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>
