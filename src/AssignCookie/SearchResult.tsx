@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { AssignCookieModal } from "./AssignCookieModal";
@@ -31,8 +30,17 @@ const SearchResult: React.FC<SearchResultProps> = ({ setContent }) => {
 
   const [assignCookieModal, setAssignCookieModal] = useState<boolean>(false);
 
+  // Function to handle adding a cookie
   const handleAdd = () => {
     setAssignCookieModal(true);
+  };
+
+  // Function to handle removing a cookie
+  const handleRemove = (index: number) => {
+    setData((prevData) => ({
+      ...prevData,
+      cookies: prevData.cookies.filter((_, i) => i !== index),
+    }));
   };
 
   return (
@@ -48,7 +56,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ setContent }) => {
                   className="rounded-[6px]"
                   onClick={() => setContent("search-card")}
                 >
-                  <ArrowLeft className="size-5" />
+                  <ArrowLeft size={24} />
                 </Button>
                 <div className="flex flex-col">
                   <span>Email: {data.email}</span>
@@ -63,7 +71,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ setContent }) => {
                 className="rounded-[6px]"
                 onClick={handleAdd}
               >
-                <PlusCircle className="size-5" />
+                <PlusCircle size={24} />
               </Button>
               <AssignCookieModal
                 open={assignCookieModal}
@@ -88,8 +96,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ setContent }) => {
                     variant="outline"
                     size="icon"
                     className="rounded-[6px]"
+                    onClick={() => handleRemove(index)}
                   >
-                    <MinusCircle className="size-5" />
+                    <MinusCircle size={24} />
                   </Button>
                 </TableCell>
               </TableRow>

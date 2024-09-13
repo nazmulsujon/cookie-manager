@@ -45,6 +45,15 @@ export default function AddCookie() {
     setCookieModal(true);
   };
 
+  const handleDeleteCookie = (cookie: Cookie) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this cookie?"
+    );
+    if (confirmDelete) {
+      setData(data.filter((item) => item !== cookie));
+    }
+  };
+
   const handleEdit = (cookie: Cookie) => {
     setSelectedCookie(cookie);
     setMode("edit");
@@ -125,6 +134,7 @@ export default function AddCookie() {
                     variant="outline"
                     size="icon"
                     className="rounded-[6px]"
+                    onClick={() => handleDeleteCookie(cookie)}
                   >
                     <Trash className="size-5" />
                   </Button>
